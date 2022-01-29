@@ -1,5 +1,6 @@
 from matplotlib import pyplot as plt
 import matplotlib.animation as anim
+from matplotlib.collections import PatchCollection
 import numpy as np
 
 
@@ -7,26 +8,19 @@ FPS = 60
 DTIME = 1 / FPS
 
 
-fig, ax = plt.subplots()
-line, = ax.plot([], [], 'ro')
+fig, ax = plt.subplots(figsize=(5, 5))
+dot = plt.Circle((0, 0), radius=0.5, linewidth=0)
+ax.add_patch(dot)
 ax.grid()
-xdata, ydata = [], []
 
 
 def init():
-    ax.set_ylim(0, 50)
-    ax.set_xlim(0, 50)
-    del xdata[:]
-    del ydata[:]
-    line.set_data(xdata, ydata)
-    return line,
+    ax.set_ylim(0, 25)
+    ax.set_xlim(0, 25)
 
 
 def run(data):
-    global xdata, ydata
-    xdata = [data]
-    ydata = [2 * data]
-    line.set_data(xdata, ydata)
+    dot.center = data, 2 * data
 
 
 def get_animation():
